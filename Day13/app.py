@@ -1,20 +1,25 @@
 
+from os import sep
 import pandas as pd
 import xlsxwriter
 import sys
 import csv
 from re import search
 
+import csv
 
+arrCheck = []
+with open('check.csv') as f:
+    reader = csv.reader(f)
+    arrCheck = list(reader)
+print(len(arrCheck))
 
-df1 = pd.read_csv('main.csv', sep=',')    
-df2 = pd.read_csv('check.csv', sep=',')
+df1 = pd.read_csv('main_trim.csv', sep = ',')    
+# df2 = pd.read_csv('check.csv', )
 
 arrCity = df1['City']
-arrCheck = df2['values']
+# arrCheck = df2['values']
 arrCode = df1['Code']
-
-
 
 
 
@@ -31,12 +36,12 @@ column = 0
 for x in range(len(arrCity)):
     # print(arrCity[x]+","+arrCode[x])
        for y in range(len(arrCheck)):
-            if arrCity[x].strip() in arrCheck[y].strip():
-             print(arrCheck[y].strip()+","+arrCode[x].strip())
-             worksheet.write(row,column, arrCheck[y].strip())
+            # print(arrCheck[y][0])
+            if arrCity[x] in arrCheck[y][0]:
+             print(arrCheck[y][0]+","+arrCode[x])
+             worksheet.write(row,column, arrCheck[y][0])
              worksheet.write(row,column+1, arrCode[x].strip())
-             row +=1
-             break
+             row +=1             
              
 # Finally, close the Excel file
 # via the close() method.
